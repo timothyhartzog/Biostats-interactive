@@ -13,7 +13,9 @@ using Printf
 
 include("core/statistics.jl")
 include("ui/formatting.jl")
+include("core/grouped.jl")
+include("ui/grouped_formatting.jl")
 
-export SummaryStats, summarize_numeric, render_summary_table
+export SummaryStats, summarize_numeric, summarize_by_group, render_summary_table, render_group_summary_table
 
 end # module BiostatsInteractive
