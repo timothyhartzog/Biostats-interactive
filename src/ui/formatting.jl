@@ -29,12 +29,14 @@ function render_summary_table(stats::SummaryStats; digits::Integer=3)::String
     digits < 0 && throw(ArgumentError("digits must be non-negative"))
 
     io = IOBuffer()
+    fmt = string("%.", digits, "f")
+
     println(io, "count\t", stats.n)
-    println(io, "mean\t", round(stats.mean; digits=digits))
-    println(io, "std\t", round(stats.std; digits=digits))
-    println(io, "min\t", round(stats.minimum; digits=digits))
-    println(io, "median\t", round(stats.median; digits=digits))
-    print(io, "max\t", round(stats.maximum; digits=digits))
+    println(io, "mean\t", Printf.@sprintf(fmt, stats.mean))
+    println(io, "std\t", Printf.@sprintf(fmt, stats.std))
+    println(io, "min\t", Printf.@sprintf(fmt, stats.minimum))
+    println(io, "median\t", Printf.@sprintf(fmt, stats.median))
+    print(io, "max\t", Printf.@sprintf(fmt, stats.maximum))
 
     return String(take!(io))
 end
