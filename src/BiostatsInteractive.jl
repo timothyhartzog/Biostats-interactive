@@ -14,13 +14,8 @@ using Printf
 include("core/statistics.jl")
 include("ui/formatting.jl")
 include("core/grouped.jl")
-include("core/io.jl")
-include("core/comparison.jl")
-include("core/comparison_ci.jl")
 include("ui/grouped_formatting.jl")
-include("ui/comparison_formatting.jl")
-include("ui/comparison_ci_formatting.jl")
 
-export SummaryStats, MeanComparisonStats, MeanComparisonCIStats, summarize_numeric, summarize_by_group, summarize_delimited, compare_group_means, compare_group_means_ci, render_summary_table, render_group_summary_table, render_mean_comparison_table, render_mean_comparison_ci_table
+export SummaryStats, summarize_numeric, summarize_by_group, render_summary_table, render_group_summary_table
 
 end # module BiostatsInteractive

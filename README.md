@@ -16,11 +16,6 @@ pkg> test
 - `render_summary_table(stats; digits=3) -> String`
 - `summarize_by_group(values, groups) -> Dict{String,SummaryStats}`
 - `render_group_summary_table(group_stats; digits=3) -> String`
-- `summarize_delimited(path; value_col, group_col=nothing, delim=',')`
-- `compare_group_means(values, groups; reference) -> Dict{String,MeanComparisonStats}`
-- `render_mean_comparison_table(comparisons; digits=3) -> String`
-- `compare_group_means_ci(values, groups; reference, z=1.96) -> Dict{String,MeanComparisonCIStats}`
-- `render_mean_comparison_ci_table(comparisons; digits=3) -> String`
 
 ## Example
 
@@ -49,35 +44,4 @@ values = [10, 20, missing, 40, 50]
 groups = ["control", "control", "treated", "treated", "treated"]
 by_group = summarize_by_group(values, groups)
 println(render_group_summary_table(by_group; digits=1))
-```
-
-## File-based example
-
-```julia
-# file: outcomes.csv
-# patient_id,arm,response
-# 1,control,10
-# 2,control,20
-# 3,treated,40
-
-by_arm = summarize_delimited("outcomes.csv"; value_col="response", group_col="arm")
-println(render_group_summary_table(by_arm; digits=2))
-```
-
-## Mean comparison example
-
-```julia
-values = [10, 20, 30, 40]
-groups = ["control", "control", "treated", "treated"]
-cmp = compare_group_means(values, groups; reference="control")
-println(render_mean_comparison_table(cmp; digits=2))
-```
-
-## Mean comparison + CI example
-
-```julia
-vals = [10, 20, 30, 40]
-grps = ["control", "control", "treated", "treated"]
-ci_cmp = compare_group_means_ci(vals, grps; reference="control")
-println(render_mean_comparison_ci_table(ci_cmp; digits=2))
 ```
