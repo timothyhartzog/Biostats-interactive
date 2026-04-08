@@ -17,6 +17,8 @@ pkg> test
 - `summarize_by_group(values, groups) -> Dict{String,SummaryStats}`
 - `render_group_summary_table(group_stats; digits=3) -> String`
 - `summarize_delimited(path; value_col, group_col=nothing, delim=',')`
+- `compare_group_means(values, groups; reference) -> Dict{String,MeanComparisonStats}`
+- `render_mean_comparison_table(comparisons; digits=3) -> String`
 
 ## Example
 
@@ -58,4 +60,13 @@ println(render_group_summary_table(by_group; digits=1))
 
 by_arm = summarize_delimited("outcomes.csv"; value_col="response", group_col="arm")
 println(render_group_summary_table(by_arm; digits=2))
+```
+
+## Mean comparison example
+
+```julia
+values = [10, 20, 30, 40]
+groups = ["control", "control", "treated", "treated"]
+cmp = compare_group_means(values, groups; reference="control")
+println(render_mean_comparison_table(cmp; digits=2))
 ```

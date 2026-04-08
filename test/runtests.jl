@@ -65,3 +65,20 @@ end
 
     @test_throws ArgumentError summarize_delimited(tmp; value_col="missing_col")
 end
+
+
+@testset "group mean comparisons" begin
+    cmp = compare_group_means([10, 20, 30, 40], ["control", "control", "treated", "treated"]; reference="control")
+    @test haskey(cmp, "treated")
+    @test cmp["treated"].n_group == 2
+    @test cmp["treated"].n_reference == 2
+    @test isapprox(cmp["treated"].mean_difference, 20.0; atol=1e-12)
+
+    table = render_mean_comparison_table(cmp; digits=1)
+    @test startswith(table, "group\treference\tn_group")
+    @test occursin("treated\tcontrol\t2\t2\t35.0\t15.0\t20.0", table)
+
+    @test_throws ArgumentError compare_group_means([1, 2], ["A", "A"]; reference="A")
+    @test_throws ArgumentError compare_group_means([1, 2], ["A", "B"]; reference="Z")
+    @test_throws ArgumentError render_mean_comparison_table(Dict{String,MeanComparisonStats}())
+end

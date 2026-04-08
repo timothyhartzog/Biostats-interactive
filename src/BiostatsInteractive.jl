@@ -15,8 +15,10 @@ include("core/statistics.jl")
 include("ui/formatting.jl")
 include("core/grouped.jl")
 include("core/io.jl")
+include("core/comparison.jl")
 include("ui/grouped_formatting.jl")
+include("ui/comparison_formatting.jl")
 
-export SummaryStats, summarize_numeric, summarize_by_group, summarize_delimited, render_summary_table, render_group_summary_table
+export SummaryStats, MeanComparisonStats, summarize_numeric, summarize_by_group, summarize_delimited, compare_group_means, render_summary_table, render_group_summary_table, render_mean_comparison_table
 
 end # module BiostatsInteractive
