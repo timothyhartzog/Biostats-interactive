@@ -19,6 +19,8 @@ pkg> test
 - `summarize_delimited(path; value_col, group_col=nothing, delim=',')`
 - `compare_group_means(values, groups; reference) -> Dict{String,MeanComparisonStats}`
 - `render_mean_comparison_table(comparisons; digits=3) -> String`
+- `compare_group_means_ci(values, groups; reference, z=1.96) -> Dict{String,MeanComparisonCIStats}`
+- `render_mean_comparison_ci_table(comparisons; digits=3) -> String`
 
 ## Example
 
@@ -69,4 +71,13 @@ values = [10, 20, 30, 40]
 groups = ["control", "control", "treated", "treated"]
 cmp = compare_group_means(values, groups; reference="control")
 println(render_mean_comparison_table(cmp; digits=2))
+```
+
+## Mean comparison + CI example
+
+```julia
+vals = [10, 20, 30, 40]
+grps = ["control", "control", "treated", "treated"]
+ci_cmp = compare_group_means_ci(vals, grps; reference="control")
+println(render_mean_comparison_ci_table(ci_cmp; digits=2))
 ```

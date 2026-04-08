@@ -82,3 +82,22 @@ end
     @test_throws ArgumentError compare_group_means([1, 2], ["A", "B"]; reference="Z")
     @test_throws ArgumentError render_mean_comparison_table(Dict{String,MeanComparisonStats}())
 end
+
+
+@testset "group mean comparisons with CI" begin
+    vals = [10, 20, 30, 40]
+    grps = ["control", "control", "treated", "treated"]
+    cmp = compare_group_means_ci(vals, grps; reference="control", z=1.96)
+
+    @test haskey(cmp, "treated")
+    @test cmp["treated"].mean_difference == 20.0
+    @test cmp["treated"].std_error > 0.0
+    @test cmp["treated"].ci_lower < cmp["treated"].mean_difference < cmp["treated"].ci_upper
+
+    table = render_mean_comparison_ci_table(cmp; digits=2)
+    @test startswith(table, "group\treference\tn_group\tn_reference\tmean_difference")
+    @test occursin("treated\tcontrol\t2\t2\t20.00", table)
+
+    @test_throws ArgumentError compare_group_means_ci(vals, grps; reference="control", z=0)
+    @test_throws ArgumentError render_mean_comparison_ci_table(Dict{String,MeanComparisonCIStats}())
+end
